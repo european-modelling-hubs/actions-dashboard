@@ -1,4 +1,4 @@
-## [{{ repo[["name"]] }}]({{ repo[["url"]] }})
+## [{{ repo[["name"]] }}]({{ repo[["html_url"]] }})
 
 ```{r, results='asis'}
 workflows <- gh::gh("/repos/{{ repo[['full_name']] }}/actions/workflows") |>
