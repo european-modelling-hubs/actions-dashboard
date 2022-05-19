@@ -4,7 +4,7 @@
 workflows <- gh::gh("/repos/{{ repo[['full_name']] }}/actions/workflows") |>
   purrr::pluck("workflows") |> 
   purrr::keep(~ .x[["state"]] == "active") |>
-  purrr::map_chr(~ glue::glue("[![]({.x[['badge_url']]}]({.x[['html_url']]})")) |>
+  purrr::map_chr(~ glue::glue("[![]({.x[['badge_url']]})]({.x[['html_url']]})")) |>
   cat(sep = "\n\n") |> 
   identity()
 ```
