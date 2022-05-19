@@ -22,8 +22,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
 
-      - name: Render README
-        run: Rscript -e 'rmarkdown::render("index.Rmd", output_dir = "_site")'
+      - run: Rscript -e 'rmarkdown::render("index.Rmd", output_dir = "_site")'
 
       - name: Deploy to GitHub pages 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
