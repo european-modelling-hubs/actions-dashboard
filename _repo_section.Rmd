@@ -1,11 +1,24 @@
+```{r}
+workflows <- gh::gh("/repos/{repo}/actions/workflows", repo = repo[['full_name']])
+if (workflows$total_count == 0) {
+  knitr::knit_exit(fully = FALSE)
+}
+workflows <- workflows$workflows |> 
+  # page deployment action. There is no badge for this unusual workflow
+  purrr::discard(~ startsWith(.x[["path"]], "dynamic/"))
+if (length(workflows) == 0) {
+  knitr::knit_exit(fully = FALSE)
+}
+```
+
 ## [{{ repo[["name"]] }}]({{ repo[["html_url"]] }})
 
 ```{r, results='asis'}
-(res <- {{ workflows }} |> 
+workflows |> 
   purrr::keep(~ .x[["state"]] == "active") |>
   purrr::map_chr(~ glue::glue("[![]({.x[['badge_url']]})]({.x[['html_url']]})")) |>
   cat(sep = "\n\n") |> 
-  identity())
+  identity()
 ```
 
 

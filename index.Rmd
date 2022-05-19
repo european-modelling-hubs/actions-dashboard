@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # Actions Health Dashboard
 
 ```{r}
-repos <- gh::gh("/orgs/{org}/repos", org = Sys.getenv("GITHUB_REPOSITORY_OWNER")) |>
+repos <- gh::gh("/orgs/{org}/repos", org = "epiforecasts") |>
   purrr::keep(~ .x[["visibility"]] == "public") |> 
   purrr::discard(~ .x[["archived"]]) |> 
   identity()
@@ -25,21 +25,7 @@ repos <- gh::gh("/orgs/{org}/repos", org = Sys.getenv("GITHUB_REPOSITORY_OWNER")
 ```{r, results='asis'}
 repos |> 
   purrr::map(function(repo) {
-    workflows <- gh::gh("/repos/{repo}/actions/workflows", repo = repo[['full_name']])
-    if (workflows$total_count == 0) {
-      return(NULL)
-    }
-    workflows <- workflows$workflows |> 
-      # page deployment action. There is no badge for this unusual workflow
-      purrr::discard(~ startsWith(.x[["path"]], "dynamic/"))
-    if (length(workflows) == 0) {
-      return(NULL)
-    }
-    knitr::knit_expand(
-      "_repo_section.Rmd", 
-      repo = repo,
-      workflows = workflows
-    )
+    knitr::knit_child("_repo_section.Rmd", envir = environment())
   }) |> 
   unlist() |> 
   sort(method = "radix") |> 
