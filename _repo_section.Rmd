@@ -1,11 +1,11 @@
 ## [{{ repo[["name"]] }}]({{ repo[["html_url"]] }})
 
 ```{r, results='asis'}
-{{ workflows }} |> 
+(res <- {{ workflows }} |> 
   purrr::keep(~ .x[["state"]] == "active") |>
   purrr::map_chr(~ glue::glue("[![]({.x[['badge_url']]})]({.x[['html_url']]})")) |>
   cat(sep = "\n\n") |> 
-  identity()
+  identity())
 ```
 
 
