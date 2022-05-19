@@ -1,0 +1,45 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  eval = Sys.getenv("CI", FALSE),
+  echo = FALSE
+)
+```
+
+# Actions Health Dashboard
+
+```{r}
+repos <- gh::gh("/orgs/{org}/repos", org = Sys.getenv("GITHUB_REPOSITORY_OWNER")) |>
+  purrr::keep(~ .x[["visibility"]] == "public") |> 
+  purrr::discard(~ .x[["archived"]]) |> 
+  identity()
+```
+
+```{r, results='asis'}
+repos |> 
+  purrr::map(function(repo) {
+    workflows <- gh::gh("/repos/{repo}/actions/workflows", repo = repo[['full_name']])
+    if (workflows$total_count != 0) {
+      knitr::knit_expand(
+        "_repo_section.Rmd", 
+        repo = repo,
+        workflows = workflows
+      )
+    } else {
+      NULL
+    }
+  }) |> 
+  unlist() |> 
+  knitr::knit_child(text = _, quiet = TRUE) |> 
+  cat(sep = "\n\n") |> 
+  identity()
+```

@@ -1,0 +1,13 @@
+## [{{ repo[["name"]] }}]({{ repo[["url"]] }})
+
+```{r, results='asis'}
+workflows <- gh::gh("/repos/{{ repo[['full_name']] }}/actions/workflows") |>
+  purrr::pluck("workflows") |> 
+  purrr::keep(~ .x[["state"]] == "active") |>
+  purrr::map_chr("badge_url") |>
+  purrr::map_chr(~ glue::glue("![]({.x})")) |>
+  cat(sep = "\n\n") |> 
+  identity()
+```
+
+
