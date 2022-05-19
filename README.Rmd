@@ -39,6 +39,7 @@ repos |>
     }
   }) |> 
   unlist() |> 
+  sort(method = "radix") |> 
   knitr::knit_child(text = _, quiet = TRUE) |> 
   cat(sep = "\n\n") |> 
   identity()
