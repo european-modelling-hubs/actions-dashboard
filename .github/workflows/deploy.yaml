@@ -1,8 +1,7 @@
 on:
   workflow_dispatch:
   push:
-    paths:
-      - index.Rmd
+    branches: main
 
 name: deploy
 
