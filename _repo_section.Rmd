@@ -11,7 +11,7 @@ if (length(workflows) == 0) {
 }
 ```
 
-## [{{ repo[["name"]] }}]({{ repo[["html_url"]] }})
+## [`r repo[["name"]]`](`r repo[["html_url"]]`)
 
 ```{r, results='asis'}
 workflows |> 
