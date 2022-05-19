@@ -4,11 +4,10 @@ on:
     paths:
       - index.Rmd
 
-name: Render README
+name: deploy
 
 jobs:
-  render:
-    name: Render README
+  deploy:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
