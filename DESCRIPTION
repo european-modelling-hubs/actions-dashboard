@@ -15,4 +15,5 @@ Imports:
     gh,
     glue,
     knitr,
-    purrr
+    purrr,
+    rmarkdown
