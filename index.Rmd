@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # Actions Health Dashboard
 
 ```{r}
-repos <- gh::gh("/orgs/{org}/repos", org = "epiforecasts") |>
+repos <- gh::gh("/orgs/{org}/repos", org = Sys.getenv("GITHUB_REPOSITORY_OWNER")) |>
   purrr::keep(~ .x[["visibility"]] == "public") |> 
   purrr::discard(~ .x[["archived"]]) |> 
   identity()
