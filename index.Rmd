@@ -1,5 +1,6 @@
 ---
 output: html_document
+title: '`r Sys.getenv("GITHUB_REPOSITORY_OWNER")` Action Dashboard'
 ---
 
 ```{r, include = FALSE}
@@ -12,8 +13,6 @@ knitr::opts_chunk$set(
   echo = FALSE
 )
 ```
-
-# Actions Health Dashboard
 
 ```{r}
 repos <- gh::gh("/orgs/{org}/repos", org = Sys.getenv("GITHUB_REPOSITORY_OWNER")) |>
