@@ -1,5 +1,7 @@
 ---
-output: html_document
+output: 
+  html_document:
+    self_contained: false
 title: '`r Sys.getenv("GITHUB_REPOSITORY_OWNER")` Action Dashboard'
 ---
 
