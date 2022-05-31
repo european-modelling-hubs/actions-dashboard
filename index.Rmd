@@ -22,7 +22,8 @@ repos <- gh::gh(
     org = Sys.getenv("GITHUB_REPOSITORY_OWNER"),
     type = "public",
     sort = "full_name",
-    per_page = 100
+    per_page = 100,
+    .limit = Inf
   ) |>
   purrr::discard(~ .x[["archived"]]) |> 
   identity()
