@@ -17,8 +17,13 @@ knitr::opts_chunk$set(
 ```
 
 ```{r}
-repos <- gh::gh("/orgs/{org}/repos", org = Sys.getenv("GITHUB_REPOSITORY_OWNER")) |>
-  purrr::keep(~ .x[["visibility"]] == "public") |> 
+repos <- gh::gh(
+    "/orgs/{org}/repos", 
+    org = Sys.getenv("GITHUB_REPOSITORY_OWNER"),
+    type = "public",
+    sort = "full_name",
+    per_page = 100
+  ) |>
   purrr::discard(~ .x[["archived"]]) |> 
   identity()
 ```
